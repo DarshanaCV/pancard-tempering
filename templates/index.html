@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./static/css/style.css" type="text/css" rel="stylesheet" />
+    <title>Pancard tempering</title>
+</head>
+<body class="container">
+    <form action='/' method="post" enctype="multipart/form-data" class="container1" id="uploadForm">
+        <h1>Check Pan Card Tempering</h1>
+        <div class="upload-file">
+            <span class="browse">Browse</span>
+            <input type="file" name="file_upload" id="file_upload" class="file-upload" />
+        </div>
+        <input type="text" placeholder="Upload file" name="file_name" id="file_name" class="file-name"/>
+        <button type="button" class="btn-large" style="background-color: #5e72e4" id="submitButton">Check</button>
+        <div class="prediction">
+            <h5>{{pred}}</h5>
+        </div>
+    </form>
+
+    <div class="container2" style="text-align: center; padding-top: 50px">
+            <div class="original">
+                <h3>Original Image</h3>
+                <img src="{{ url_for('static', filename=original_image) }}" alt="Original Image" width="340" height="200">
+            </div>
+            
+            <div class="uploaded">
+                <h3>Uploaded Image</h3>
+                <img src="{{ url_for('static', filename=uploaded_image) }}" alt="Uploaded Image with Rectangles on Differences"
+                    width="340" height="200">
+            </div>
+        
+        
+        <div class="difference">
+            <h3>Diffrences in Images</h3>
+            <img src="{{ url_for('static', filename=diff_image) }}" alt="Differences in Images" width="340" height="200">
+        </div>
+    </div>
+
+    <!-- for displaying file name -->
+    <script type="text/javascript">
+        document.getElementById('file_upload').onchange = function () {
+            document.getElementById('file_name').value = this.value.slice(12, 100);
+        };
+    </script>
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function () {
+            var fileInput = document.getElementById('file_upload');
+            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                alert('Please select a file.');
+                return;
+            }
+            document.getElementById('uploadForm').submit();
+        });
+    </script>
+</body>
+</html>
